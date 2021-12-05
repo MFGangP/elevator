@@ -1,0 +1,21 @@
+#define F_CPU 16000000L
+#include <avr/io.h>
+#include <util/delay.h>
+
+unsigned char pattern[]
+={0x3f,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F,0x77,0x7C,0x39,0x5E,0x79,0x71};
+
+int main(){
+
+	int i=0;
+	DDRA = 0xFF;
+	DDRD = 0x00;
+	PORTA = pattern[i];
+	
+	while(1)  {
+		while(~PIND & 0X01);
+		_delay_ms(200);
+		if(++i==16)i=0;
+		PORTA = pattern[i];
+	}
+}
